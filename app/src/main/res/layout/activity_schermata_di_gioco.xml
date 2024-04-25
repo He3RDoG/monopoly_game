@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D61F1F"
+    tools:context=".game_form">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/immagine_per_monopoly" />
+
+
+    <Button
+        android:id="@+id/buttonplayer_1"
+        android:layout_width="111dp"
+        android:layout_height="wrap_content"
+        android:text="player_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/contoplayer_1"
+        android:layout_width="106dp"
+        android:layout_height="wrap_content"
+        android:text="contoplayer_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonplayer_1" />
+
+    <Button
+        android:id="@+id/buttonplayer_2"
+        android:layout_width="111dp"
+        android:layout_height="wrap_content"
+        android:text="player_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/contoplayer_2"
+        android:layout_width="106dp"
+        android:layout_height="wrap_content"
+        android:text="contoplayer_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonplayer_2" />
+
+    <Button
+        android:id="@+id/buttonplayer_3"
+        android:layout_width="111dp"
+        android:layout_height="wrap_content"
+        android:text="player_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/label_contoplayer_3"
+        android:layout_width="111dp"
+        android:layout_height="wrap_content"
+        android:text="contoplayer_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonplayer_3" />
+
+
+    <Button
+        android:id="@+id/buttonplayer_4"
+        android:layout_width="111dp"
+        android:layout_height="wrap_content"
+        android:text="player_4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/label_contoplayer_4"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:text="contoplayer_4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonplayer_4" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
