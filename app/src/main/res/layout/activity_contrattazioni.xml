@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity_contrattazioni">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="1143dp"
+        android:layout_height="645dp"
+        android:alpha="0.45"
+        android:background="#7CB342"
+        app:srcCompat="@drawable/immagine_contrattazione"
+        tools:layout_editor_absoluteX="-126dp"
+        tools:layout_editor_absoluteY="-45dp" />
+
+    <TextView
+        android:id="@+id/textViewOpponentProperties"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Proprietà della controparte:"
+        tools:layout_editor_absoluteX="6dp"
+        tools:layout_editor_absoluteY="196dp" />
+
+    <Spinner
+        android:id="@+id/spinnerOpponentProperties"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/property_options"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="53dp" />
+
+    <Spinner
+        android:id="@+id/spinnerOpponentActions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/property_options"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="302dp" />
+
+    <Spinner
+        android:id="@+id/spinnerYourActions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/property_options"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="148dp" />
+
+    <TextView
+        android:id="@+id/textViewYourProperties"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Le tue proprietà:"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="27dp" />
+
+    <Spinner
+        android:id="@+id/spinnerYourProperties"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/property_options"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="225dp" />
+
+    <EditText
+        android:id="@+id/editTextMoneyAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Importo di denaro"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="92dp" />
+
+    <EditText
+        android:id="@+id/editTextMoneyAmountContropart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Importo di denaro"
+        tools:layout_editor_absoluteX="6dp"
+        tools:layout_editor_absoluteY="257dp" />
+
+    <Button
+        android:id="@+id/buttonSendRequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Invia richiesta"
+        tools:layout_editor_absoluteX="6dp"
+        tools:layout_editor_absoluteY="347dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

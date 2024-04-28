@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Dialog_casella">
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="408dp"
+        android:layout_height="827dp"
+        app:srcCompat="@drawable/immagine_per_monopoly_1"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="89dp" />
+
+    <Button
+        android:id="@+id/ipoteca"
+        android:layout_width="202dp"
+        android:layout_height="86dp"
+        android:text="ipoteca"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="26dp" />
+
+    <Button
+        android:id="@+id/casa_meno"
+        android:layout_width="202dp"
+        android:layout_height="67dp"
+        android:text="casa-"
+        tools:layout_editor_absoluteX="207dp"
+        tools:layout_editor_absoluteY="154dp" />
+
+    <Button
+        android:id="@+id/casa_più"
+        android:layout_width="171dp"
+        android:layout_height="66dp"
+        android:text="casa+"
+        tools:layout_editor_absoluteX="9dp"
+        tools:layout_editor_absoluteY="154dp" />
+
+    <TextView
+        android:id="@+id/valore_ipoteca"
+        android:layout_width="160dp"
+        android:layout_height="45dp"
+        android:text="valore ipoteca"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="208dp"
+        tools:layout_editor_absoluteY="26dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="numero case"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="238dp" />
+
+    <TextView
+        android:id="@+id/costo_disipoteca"
+        android:layout_width="196dp"
+        android:layout_height="38dp"
+        android:text="costo disipoteca"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="208dp"
+        tools:layout_editor_absoluteY="74dp" />
+
+    <TextView
+        android:id="@+id/vaore_contratto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="vaore contratto"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="124dp"
+        tools:layout_editor_absoluteY="757dp" />
+
+    <Button
+        android:id="@+id/compra"
+        android:layout_width="135dp"
+        android:layout_height="61dp"
+        android:text="compra"
+        tools:layout_editor_absoluteX="138dp"
+        tools:layout_editor_absoluteY="803dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

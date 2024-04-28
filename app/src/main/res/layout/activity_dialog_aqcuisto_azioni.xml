@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alpha="0.7"
+    android:background="#FFFFFF"
+    android:backgroundTint="#99E40D"
+    tools:context=".Dialog_aqcuisto_azioni">
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="183dp"
+        android:layout_height="209dp"
+        app:srcCompat="@drawable/immagine_per_monopoly_1"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="17dp" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.5"
+        app:srcCompat="@drawable/azioniii"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <Button
+        android:id="@+id/Sell"
+        android:layout_width="111dp"
+        android:layout_height="68dp"
+        android:backgroundTint="#E32121"
+        android:text="Sell"
+        android:textColor="#1E1D1D"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="780dp" />
+
+    <Button
+        android:id="@+id/buy"
+        android:layout_width="111dp"
+        android:layout_height="68dp"
+        android:backgroundTint="#95BC09"
+        android:text="buy"
+        android:textColor="#1E1D1D"
+        tools:layout_editor_absoluteX="268dp"
+        tools:layout_editor_absoluteY="780dp" />
+
+    <TextView
+        android:id="@+id/valore_azionaro_attuale"
+        android:layout_width="242dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="209dp"
+        android:layout_marginTop="124dp"
+        android:layout_marginBottom="713dp"
+        android:text="valore azionaro attuale"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/chi_detiene_maggioranza"
+        android:layout_width="242dp"
+        android:layout_height="54dp"
+        android:text="95% chi detiene maggioranza"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="209dp"
+        tools:layout_editor_absoluteY="185dp" />
+
+    <TextView
+        android:id="@+id/passaggi_con_1_case"
+        android:layout_width="356dp"
+        android:layout_height="44dp"
+        android:text="passaggi con una casa: 1"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="350dp" />
+
+    <TextView
+        android:id="@+id/passaggi_con_4_case"
+        android:layout_width="359dp"
+        android:layout_height="35dp"
+        android:text="passaggi senza case: 4/valore dell'epoca"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="22dp"
+        tools:layout_editor_absoluteY="249dp" />
+
+    <TextView
+        android:id="@+id/passaggi_con_serie_completa"
+        android:layout_width="365dp"
+        android:layout_height="39dp"
+        android:text="passaggi con serie completa:2"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="22dp"
+        tools:layout_editor_absoluteY="297dp" />
+
+    <TextView
+        android:id="@+id/passaggi_con_2_case"
+        android:layout_width="354dp"
+        android:layout_height="37dp"
+        android:text="passaggi con 2 case: 4"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="412dp" />
+
+    <TextView
+        android:id="@+id/sdc"
+        android:layout_width="354dp"
+        android:layout_height="37dp"
+        android:text="passaggi con 4 case: 4"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="542dp" />
+
+    <TextView
+        android:id="@+id/passaggi_con_5_case"
+        android:layout_width="354dp"
+        android:layout_height="37dp"
+        android:text="passaggi con 5 case: 1"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="27dp"
+        tools:layout_editor_absoluteY="610dp" />
+
+    <TextView
+        android:id="@+id/numero_di_ribassi"
+        android:layout_width="360dp"
+        android:layout_height="35dp"
+        android:text="numero di ribassi: "
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="27dp"
+        tools:layout_editor_absoluteY="720dp" />
+
+
+    <TextView
+        android:id="@+id/valore_max"
+        android:layout_width="142dp"
+        android:layout_height="49dp"
+        android:text="valore max:"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="27dp"
+        tools:layout_editor_absoluteY="660dp" />
+
+    <TextView
+        android:id="@+id/valore_min"
+        android:layout_width="142dp"
+        android:layout_height="49dp"
+        android:text="valore min:"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="245dp"
+        tools:layout_editor_absoluteY="660dp" />
+
+    <TextView
+        android:id="@+id/assaggi_con_3_case"
+        android:layout_width="354dp"
+        android:layout_height="37dp"
+        android:text="passaggi con 3 case: 4"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="27dp"
+        tools:layout_editor_absoluteY="477dp" />
+
+    <TextView
+        android:id="@+id/Propriey_Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="209dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="39dp"
+        android:layout_marginBottom="842dp"
+        android:text=" Propriey Name"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/valore_attuale_proprietà"
+        android:layout_width="240dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="209dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="776dp"
+        android:text="valore attuale proprietà"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

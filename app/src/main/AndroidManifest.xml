@@ -13,20 +13,30 @@
         android:theme="@style/Theme.Monopoly_game"
         tools:targetApi="31">
         <activity
+            android:name=".Dialog_casella"
+            android:exported="false" />
+        <activity
+            android:name=".activity_contrattazioni"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Dialog_aqcuisto_azioni"
+            android:exported="false" />
+        <activity
             android:name=".game_form"
             android:exported="false"
-
-            />
+            android:screenOrientation="landscape" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
