@@ -12,42 +12,33 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+public class login_form extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Giocolocale giocolocale;
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        setContentView(R.layout.activity_login);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.login), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        Button myButton = findViewById(R.id.buttonPlay);
+        Button myButton = findViewById(R.id.backButton);
         myButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Azioni da eseguire quando l'utente preme il pulsante
                 // Ad esempio, mostra un messaggio di avviso (toast)
-                Toast.makeText(MainActivity.this, "Avvio gioco", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, game_form.class);
+                Toast.makeText(login_form.this, "Avvio gioco", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(login_form.this, MainActivity.class);
+                finish();
                 startActivity(intent);
 
             }
         });
-        Button myButton2 = findViewById(R.id.buttonLogin);
-        myButton2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Azioni da eseguire quando l'utente preme il pulsante
-                // Ad esempio, mostra un messaggio di avviso (toast)
-                Toast.makeText(MainActivity.this, "Login", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, login_form.class);
-                startActivity(intent);
 
-            }
-        });
+
     }
+
 
 }
