@@ -125,7 +125,7 @@ ImageView imageView7;
                 botTurnCount++;
 
                 // Se tutti i bot hanno giocato il loro turno, interrompi il ciclo
-                if (botTurnCount >= numeroBot) {
+                if (botTurnCount > numeroBot) {
                     botTurnCount = 0; // Resetta il contatore dei turni dei bot
                     return;
                 }
@@ -222,8 +222,11 @@ ImageView imageView7;
 // Crea un nuovo Runnable
 
         giocaButton.setOnClickListener(new View.OnClickListener() {
+
                                            @Override
                                            public void onClick(View v) {
+                                               botTurnCount=0;
+
                                                switch (turno) {
                                                    case 1:
                                                        currentPlayer = player;
@@ -529,15 +532,7 @@ pedine();
         }
 
         // Show the "roll" button again after a delay of 5 seconds
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // Show the "roll" button again
-                giocaButton.setVisibility(View.VISIBLE);
 
-
-            }
-        }, 5000);
     }
 
     public void nextTurn() {
@@ -556,7 +551,7 @@ pedine();
             botTurnCount++;
 
             // If all bots have had their turn, break the cycle
-            if (botTurnCount >= numeroBot) {
+            if (botTurnCount > numeroBot) {
                 botTurnCount = 0; // Reset the bot turn counter
                 return;
             }
