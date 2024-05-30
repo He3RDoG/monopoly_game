@@ -8,6 +8,8 @@ public class casella {
     String colore;
     int prezzo;
     Player proprietario;
+    boolean hotel;
+    int caseNum;
 
     public casella(String nome, String colore,int prezzo) {
         this.nome = nome;
@@ -15,6 +17,8 @@ public class casella {
         giocatori = new ArrayList<>();
         this.prezzo=prezzo;
         proprietario=null;
+        hotel=false;
+        caseNum=0;
     }
     public void addPlayer(Player player) {
         this.giocatori.add(player);

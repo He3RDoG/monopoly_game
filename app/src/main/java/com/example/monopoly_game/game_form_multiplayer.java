@@ -1,11 +1,11 @@
 package com.example.monopoly_game;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.Random;
 
-public class game_form extends AppCompatActivity {
+public class game_form_multiplayer extends AppCompatActivity {
 
 
     casella[] caselle = new casella[38];
@@ -151,7 +151,7 @@ ImageView imageView7;
         player.setPlayer();
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_schermata_di_gioco);
+        setContentView(R.layout.activity_schermata_di_gioco_multiplayer);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -186,7 +186,7 @@ ImageView imageView7;
             @Override
             public void onClick(View v) {
                 // Crea un AlertDialog.Builder
-                AlertDialog.Builder builder = new AlertDialog.Builder(game_form.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(game_form_multiplayer.this);
 
                 // Imposta il titolo e il messaggio
                 builder.setTitle("Dati del giocatore");
@@ -216,7 +216,7 @@ ImageView imageView7;
             @Override
             public void onClick(View v) {
                 // Crea un AlertDialog.Builder
-                AlertDialog.Builder builder = new AlertDialog.Builder(game_form.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(game_form_multiplayer.this);
 
                 // Imposta il titolo e il messaggio
                 builder.setTitle("Dati del giocatore");
@@ -246,7 +246,7 @@ ImageView imageView7;
             @Override
             public void onClick(View v) {
                 // Crea un AlertDialog.Builder
-                AlertDialog.Builder builder = new AlertDialog.Builder(game_form.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(game_form_multiplayer.this);
 
                 // Imposta il titolo e il messaggio
                 builder.setTitle("Dati del giocatore");
@@ -276,7 +276,7 @@ ImageView imageView7;
             @Override
             public void onClick(View v) {
                 // Crea un AlertDialog.Builder
-                AlertDialog.Builder builder = new AlertDialog.Builder(game_form.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(game_form_multiplayer.this);
 
                 // Imposta il titolo e il messaggio
                 builder.setTitle("Dati del giocatore");
@@ -361,15 +361,15 @@ ImageView imageView7;
                                                    pedine();
 
                                                    // Mostra a schermo quanto è uscito dal dado
-                                                   Toast.makeText(game_form.this, "Player rolled: " + steps, Toast.LENGTH_SHORT).show();
+                                                   Toast.makeText(game_form_multiplayer.this, "Player rolled: " + steps, Toast.LENGTH_SHORT).show();
 
                                                    // Crea un AlertDialog.Builder
-                                                   AlertDialog.Builder builder = new AlertDialog.Builder(game_form.this);
+                                                   AlertDialog.Builder builder = new AlertDialog.Builder(game_form_multiplayer.this);
 
 
                                                    if (caselle[currentPlayer.posizione].proprietario == currentPlayer) {
                                                        // Ask the player if they want to buy a house
-                                                       AlertDialog.Builder builder1 = new AlertDialog.Builder(game_form.this);
+                                                       AlertDialog.Builder builder1 = new AlertDialog.Builder(game_form_multiplayer.this);
                                                        builder1.setTitle("Buy House");
                                                        builder1.setMessage("Do you want to buy a house for " + (caselle[currentPlayer.posizione].prezzo * 0.75) + "?");
                                                        builder1.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -380,9 +380,9 @@ ImageView imageView7;
                                                                    if (caselle[currentPlayer.posizione].caseNum == 4) {
                                                                        caselle[currentPlayer.posizione].hotel = true;
                                                                    }
-                                                                   Toast.makeText(game_form.this, "You bought a house on: " + caselle[currentPlayer.posizione].nome, Toast.LENGTH_SHORT).show();
+                                                                   Toast.makeText(game_form_multiplayer.this, "You bought a house on: " + caselle[currentPlayer.posizione].nome, Toast.LENGTH_SHORT).show();
                                                                } else {
-                                                                   Toast.makeText(game_form.this, "You don't have enough money to buy a house.", Toast.LENGTH_SHORT).show();
+                                                                   Toast.makeText(game_form_multiplayer.this, "You don't have enough money to buy a house.", Toast.LENGTH_SHORT).show();
                                                                }
                                                            }
                                                        });
@@ -624,7 +624,7 @@ pedine();
         System.out.println("Player rolled: " + steps);
 
         // Mostra a schermo quanto è uscito dal dado
-        Toast.makeText(game_form.this, "Bot rolled: " + steps, Toast.LENGTH_SHORT).show();
+        Toast.makeText(game_form_multiplayer.this, "Bot rolled: " + steps, Toast.LENGTH_SHORT).show();
 
         caselle[botPlayer.posizione].removePlayer(botPlayer);
         caselle[botPlayer.move(steps, caselle)].addPlayer(botPlayer);
@@ -641,7 +641,7 @@ pedine();
                 if (caselle[botPlayer.posizione].caseNum == 4) {
                     caselle[botPlayer.posizione].hotel = true;
                 }
-                Toast.makeText(game_form.this, "Bot bought a house on: " + caselle[botPlayer.posizione].nome, Toast.LENGTH_SHORT).show();
+                Toast.makeText(game_form_multiplayer.this, "Bot bought a house on: " + caselle[botPlayer.posizione].nome, Toast.LENGTH_SHORT).show();
             }
         }
         // Controlla se la casella ha un proprietario
@@ -654,14 +654,14 @@ pedine();
                 aggiorna();
 
                 // Mostra un messaggio a schermo
-                Toast.makeText(game_form.this, "Bot bought property: " + caselle[botPlayer.posizione].nome, Toast.LENGTH_SHORT).show();
+                Toast.makeText(game_form_multiplayer.this, "Bot bought property: " + caselle[botPlayer.posizione].nome, Toast.LENGTH_SHORT).show();
             }
         } else {
             // Il bot paga l'affitto
             botPlayer.pay(caselle[botPlayer.posizione].getRent());
 
             // Mostra un messaggio a schermo
-            Toast.makeText(game_form.this, "Bot paid rent: " + caselle[botPlayer.posizione].getRent(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(game_form_multiplayer.this, "Bot paid rent: " + caselle[botPlayer.posizione].getRent(), Toast.LENGTH_SHORT).show();
         }
 
         // Show the "roll" button again after a delay of 5 seconds

@@ -27,6 +27,8 @@
             android:exported="false"
             android:screenOrientation="portrait"
             />
+        <activity android:name=".game_form_multiplayer" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

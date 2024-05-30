@@ -48,6 +48,15 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        Button button_Multiplayer = findViewById(R.id.button_Multiplayer);
+        button_Multiplayer.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Toast.makeText(MainActivity.this, "Multiplayer", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this,game_form_multiplayer.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
