@@ -1,4 +1,5 @@
 package com.example.monopoly_game;
+
 import java.util.Comparator;
 
 
@@ -10,6 +11,8 @@ public class Player extends unityBase {
     ArrayList<Banconote> soldi;
     public int posizione;
     boolean prigione;
+    ArrayList<casella> proprietà;
+    Boolean bot;
 
 public Player(int id, String username) {
         this.id = id;
@@ -18,6 +21,12 @@ public Player(int id, String username) {
         initSoldi();
         this.posizione = 0;
         this.prigione = false;
+        this.proprietà = new ArrayList<>();
+        bot = true;
+    }
+    public void setPlayer()
+    {
+        bot=false;
     }
     public void initSoldi() {
         this.soldi.add(new Banconote(500, "viola"));
@@ -37,6 +46,9 @@ public Player(int id, String username) {
         this.soldi.add(new Banconote(1, "bianco"));
         this.soldi.add(new Banconote(1, "bianco"));
     }
+    public void addProprietà(casella casella) {
+        this.proprietà.add(casella);
+    }
     public ArrayList<Banconote> giveChange(int change) {
         int[] billValues = {500, 100, 50, 20, 10, 5, 1};
         ArrayList<Banconote> changeBills = new ArrayList<>();
@@ -49,6 +61,9 @@ public Player(int id, String username) {
         }
 
         return changeBills;
+    }
+    public int getMoney() {
+        return this.soldi.stream().mapToInt(Banconote::getValore).sum();
     }
 
     public void pay(int amount) {

@@ -18,6 +18,13 @@ public class casella {
     }
     public void addPlayer(Player player) {
         this.giocatori.add(player);
+
+    }
+    public int getRent(){
+        return this.prezzo/8;
+    }
+    public String getNome(){
+        return this.nome;
     }
     public void setProprietario(Player player){
         this.proprietario=player;
