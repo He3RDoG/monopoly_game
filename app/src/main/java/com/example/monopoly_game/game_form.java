@@ -168,6 +168,9 @@ ImageView imageView7;
 
         // Trova il pulsante del giocatore e imposta un listener di click
         Button playerButton = findViewById(R.id.buttonplayer_1);
+        Button playerButton1 = findViewById(R.id.buttonplayer_2);
+        Button playerButton2 = findViewById(R.id.buttonplayer_3);
+        Button playerButton3 = findViewById(R.id.buttonplayer_4);
         giocaButton = findViewById(R.id.buttongioca);
         if (player.bot) {
             // Nascondi il pulsante "gira" durante il turno del bot
@@ -179,6 +182,36 @@ ImageView imageView7;
             // Mostra nuovamente il pulsante "gira" dopo un ritardo di 5 secondi
             handler.postDelayed(botTurnRunnable, 5000);
         }
+        playerButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Crea un AlertDialog.Builder
+                AlertDialog.Builder builder = new AlertDialog.Builder(game_form.this);
+
+                // Imposta il titolo e il messaggio
+                builder.setTitle("Dati del giocatore");
+                builder.setMessage("Nome: Mario\nCognome: Rossi\nUsername: mario_rossi\nPartite giocate: 10\nVittorie: 5");
+                String message = "Nome: Mario\nCognome: Rossi\nUsername: mario_rossi\nPartite giocate: 10\nVittorie: 5";
+                String properties = player1.proprietà.stream().map(casella::getNome).reduce("", (a, b) -> a + ", " + b);
+                if (!properties.isEmpty()) {
+                    message += "\nProprietà: " + properties;
+                }
+                builder.setMessage(message);
+
+                // Imposta un pulsante positivo
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Chiudi la finestra di dialogo quando l'utente fa clic su OK
+                        dialog.dismiss();
+                    }
+                });
+
+                // Crea e mostra la finestra di dialogo
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+
+        });
         playerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,6 +223,66 @@ ImageView imageView7;
                 builder.setMessage("Nome: Mario\nCognome: Rossi\nUsername: mario_rossi\nPartite giocate: 10\nVittorie: 5");
                 String message = "Nome: Mario\nCognome: Rossi\nUsername: mario_rossi\nPartite giocate: 10\nVittorie: 5";
                 String properties = player.proprietà.stream().map(casella::getNome).reduce("", (a, b) -> a + ", " + b);
+                if (!properties.isEmpty()) {
+                    message += "\nProprietà: " + properties;
+                }
+                builder.setMessage(message);
+
+                // Imposta un pulsante positivo
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Chiudi la finestra di dialogo quando l'utente fa clic su OK
+                        dialog.dismiss();
+                    }
+                });
+
+                // Crea e mostra la finestra di dialogo
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+
+        });
+        playerButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Crea un AlertDialog.Builder
+                AlertDialog.Builder builder = new AlertDialog.Builder(game_form.this);
+
+                // Imposta il titolo e il messaggio
+                builder.setTitle("Dati del giocatore");
+                builder.setMessage("Nome: Mario\nCognome: Rossi\nUsername: mario_rossi\nPartite giocate: 10\nVittorie: 5");
+                String message = "Nome: Mario\nCognome: Rossi\nUsername: mario_rossi\nPartite giocate: 10\nVittorie: 5";
+                String properties = player2.proprietà.stream().map(casella::getNome).reduce("", (a, b) -> a + ", " + b);
+                if (!properties.isEmpty()) {
+                    message += "\nProprietà: " + properties;
+                }
+                builder.setMessage(message);
+
+                // Imposta un pulsante positivo
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Chiudi la finestra di dialogo quando l'utente fa clic su OK
+                        dialog.dismiss();
+                    }
+                });
+
+                // Crea e mostra la finestra di dialogo
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+
+        });
+        playerButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Crea un AlertDialog.Builder
+                AlertDialog.Builder builder = new AlertDialog.Builder(game_form.this);
+
+                // Imposta il titolo e il messaggio
+                builder.setTitle("Dati del giocatore");
+                builder.setMessage("Nome: Mario\nCognome: Rossi\nUsername: mario_rossi\nPartite giocate: 10\nVittorie: 5");
+                String message = "Nome: Mario\nCognome: Rossi\nUsername: mario_rossi\nPartite giocate: 10\nVittorie: 5";
+                String properties = player3.proprietà.stream().map(casella::getNome).reduce("", (a, b) -> a + ", " + b);
                 if (!properties.isEmpty()) {
                     message += "\nProprietà: " + properties;
                 }
