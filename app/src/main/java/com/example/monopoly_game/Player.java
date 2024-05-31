@@ -13,6 +13,7 @@ public class Player extends unityBase {
     boolean prigione;
     ArrayList<casella> proprietà;
     Boolean bot;
+    public int turno;
 
 public Player(int id, String username) {
         this.id = id;
@@ -23,6 +24,7 @@ public Player(int id, String username) {
         this.prigione = false;
         this.proprietà = new ArrayList<>();
         bot = true;
+        turno = 0;
     }
 
     public Player()
@@ -37,6 +39,9 @@ public Player(int id, String username) {
     public void setPlayer()
     {
         bot=false;
+    }
+    public int getId(){
+        return this.id;
     }
     public void initSoldi() {
         this.soldi.add(new Banconote(500, "viola"));

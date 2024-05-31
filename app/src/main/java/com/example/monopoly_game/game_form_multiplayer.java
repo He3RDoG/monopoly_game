@@ -2,12 +2,14 @@ package com.example.monopoly_game;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -26,17 +28,27 @@ import androidx.core.view.WindowInsetsCompat;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.concurrent.Future;
 
 public class game_form_multiplayer extends AppCompatActivity {
 
 
+    ExecutorService executor = Executors.newSingleThreadExecutor();
+
     casella[] caselle = new casella[38];
+    boolean isRunning = true;
 ImageView imageView7;
     ImageView imageView8;
     ImageView imageView9;
@@ -89,6 +101,7 @@ ImageView imageView7;
     TextView contoplayer_4;
     int turno=1;
     Player currentPlayer;
+    List<Player> players;
 
     Player player = new Player(1, "Test Player");
 
@@ -102,6 +115,7 @@ ImageView imageView7;
     Handler handler = new Handler();
     int botTurnCount = 0; // Aggiungi un contatore per i turni dei bot
     ArrayList<Player> giocatori = new ArrayList<>();
+
 
     Runnable botTurnRunnable = new Runnable() {
         @Override
@@ -157,9 +171,41 @@ ImageView imageView7;
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        giocaButton = findViewById(R.id.buttongioca);
+        giocaButton.setVisibility(View.INVISIBLE);
 
-        String response = leggiGiocatori();
-        System.out.println(response);
+        Future<String> future = leggiGiocatori();
+        try {
+            String response = future.get();
+
+            // Utilizza la risposta qui
+            Gson gson = new Gson();
+            Type playerListType = new TypeToken<List<Player>>(){}.getType();
+            players = gson.fromJson(response, playerListType);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        addPlayer(player);
+        if (player.getId()==1)
+        {
+            while(players.size()>1)
+            {
+                giocaButton.setVisibility(View.VISIBLE);
+                gioca();
+                break;
+
+            }
+        }
+        else {
+            handler.post(runnableCode);
+        }
+
+
+
+
+
+
 
 
         // Trova il pulsante del giocatore e imposta un listener di click
@@ -167,7 +213,7 @@ ImageView imageView7;
         Button playerButton1 = findViewById(R.id.buttonplayer_2);
         Button playerButton2 = findViewById(R.id.buttonplayer_3);
         Button playerButton3 = findViewById(R.id.buttonplayer_4);
-        giocaButton = findViewById(R.id.buttongioca);
+
         playerButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -300,7 +346,6 @@ ImageView imageView7;
         contoplayer_4.setText(player.getMoney() + "€");
 
 
-// Crea un nuovo Runnable
 
         giocaButton.setOnClickListener(new View.OnClickListener() {
 
@@ -612,35 +657,139 @@ pedine();
         // If the next player is a bot, start their turn automatically
 
     }
-    public String leggiGiocatori()
-    {
-        String response = "";
-        try {
-            URL url = new URL("https://5ailucastangherlin.barsanti.edu.it/api_monopoly/Giocatori_mobili");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setReadTimeout(15000);
-            conn.setConnectTimeout(15000);
-            conn.connect();
+    public Future<String> leggiGiocatori() {
+        return executor.submit(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                String response = "";
+                try {
+                    URL url = new URL("https://5ailucastangherlin.barsanti.edu.it/api_monopoly/Giocatori_mobili");
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.connect();
 
-            int responseCode = conn.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                String line;
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                while ((line = br.readLine()) != null) {
-                    response += line;
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    String inputLine;
+                    StringBuffer response1 = new StringBuffer();
+                    while ((inputLine = in.readLine()) != null) {
+                        response1.append(inputLine);
+                    }
+                    response = response1.toString();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } else {
-                response = "";
+                return response;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return response;
-
-
+        });
     }
 
+
+    public void addPlayer(Player newPlayer) {
+        if (players.size() >= 4) {
+            // Mostra un AlertDialog se ci sono già 4 giocatori
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Errore");
+            builder.setMessage("Ci sono già 4 giocatori.");
+            builder.setPositiveButton("Chiudi", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        } else {
+
+            players.add(newPlayer);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        // Crea un oggetto URL
+                        URL url = new URL("https://5ailucastangherlin.barsanti.edu.it/api_monopoly/userInPartita");
+
+                        // Crea una connessione HttpURLConnection
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                        // Imposta il metodo di richiesta a POST
+                        conn.setRequestMethod("POST");
+
+                        // Imposta l'intestazione Content-Type
+                        conn.setRequestProperty("Content-Type", "application/json; utf-8");
+
+                        // Abilita l'output e l'input
+                        conn.setDoOutput(true);
+                        conn.setDoInput(true);
+
+                        // Crea un oggetto JSON con i dati del giocatore
+                        JSONObject jsonParam = new JSONObject();
+                        jsonParam.put("id", player.getId());
+                        jsonParam.put("posizione_in_gioco", player.posizione);
+                        jsonParam.put("soldi_correnti", player.getMoney());
+                        jsonParam.put("Proprio_turno", player.turno);
+                        jsonParam.put("id_partita", 1);
+
+
+                        // Scrive i dati JSON nella connessione
+                        try(OutputStream os = conn.getOutputStream()) {
+                            byte[] input = jsonParam.toString().getBytes("utf-8");
+                            os.write(input, 0, input.length);
+                        }
+
+                        // Ottieni la risposta
+                        try(BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"))) {
+                            StringBuilder response = new StringBuilder();
+                            String responseLine = null;
+                            while ((responseLine = br.readLine()) != null) {
+                                response.append(responseLine.trim());
+                            }
+                            System.out.println(response.toString());
+                        }
+
+                        // Chiudi la connessione
+                        conn.disconnect();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+        }
+    }
+    Runnable runnableCode = new Runnable() {
+        @Override
+        public void run() {
+            // Esegui la chiamata all'API qui
+            Future<String> future = leggiGiocatori();
+            try {
+                String response = future.get();
+                // Utilizza la risposta qui
+                Gson gson = new Gson();
+                Type playerListType = new TypeToken<List<Player>>(){}.getType();
+                List<Player> players = gson.fromJson(response, playerListType);
+
+                // Controlla se è il turno del giocatore
+                for (Player player : players) {
+                    if (player.turno == turno) {
+                        isRunning = false;
+                        giocaButton.setVisibility(View.VISIBLE);
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Ripeti questo runnable code ogni mezzo secondo solo se isRunning è true
+            if (isRunning) {
+                handler.postDelayed(this, 500);
+            }
+        }
+    };
+    public void gioca()
+    {
+
+    }
 
 }
 
