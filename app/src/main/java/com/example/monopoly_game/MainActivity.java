@@ -48,6 +48,17 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        Button myButton3 = findViewById(R.id.leaderboard);
+        myButton3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Azioni da eseguire quando l'utente preme il pulsante
+                // Ad esempio, mostra un messaggio di avviso (toast)
+                Toast.makeText(MainActivity.this, "Leaderboard", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, leaderboard_form.class);
+                startActivity(intent);
+
+            }
+        });
         Button button_Multiplayer = findViewById(R.id.button_Multiplayer);
         button_Multiplayer.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

@@ -28,6 +28,7 @@
             android:screenOrientation="portrait"
             />
         <activity android:name=".game_form_multiplayer" />
+        <activity android:name=".leaderboard_form" />
 
         <activity
             android:name=".MainActivity"
