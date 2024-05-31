@@ -1,7 +1,13 @@
 package com.example.monopoly_game;
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -10,13 +16,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Random;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 
 public class game_form_multiplayer extends AppCompatActivity {
 
@@ -80,12 +95,13 @@ ImageView imageView7;
     Player player1 = new Player(2, "Test Player");
     Player player2 = new Player(3, "Test Player");
     Player player3 = new Player(4, "Test Player");
-    Player[]giocatori={player,player1,player2,player3};
+
     Button giocaButton;
 
     int numeroBot;
     Handler handler = new Handler();
     int botTurnCount = 0; // Aggiungi un contatore per i turni dei bot
+    ArrayList<Player> giocatori = new ArrayList<>();
 
     Runnable botTurnRunnable = new Runnable() {
         @Override
@@ -120,25 +136,6 @@ ImageView imageView7;
             }
 
             // Se il prossimo giocatore è un bot, avvia il suo turno automaticamente
-            if (nextPlayer.bot) {
-                // Incrementa il contatore dei turni dei bot
-                botTurnCount++;
-
-                // Se tutti i bot hanno giocato il loro turno, interrompi il ciclo
-                if (botTurnCount > numeroBot) {
-                    botTurnCount = 0; // Resetta il contatore dei turni dei bot
-                    return;
-                }
-
-                // Nascondi il pulsante "gira" durante il turno del bot
-                giocaButton.setVisibility(View.INVISIBLE);
-
-                // Esegui il turno del bot immediatamente
-                playBotTurn(nextPlayer);
-
-                // Mostra nuovamente il pulsante "gira" dopo un ritardo di 5 secondi
-                handler.postDelayed(botTurnRunnable, 5000);
-            }
         }
     };
 
@@ -146,9 +143,12 @@ ImageView imageView7;
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        player.setPlayer();
+
+
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_schermata_di_gioco_multiplayer);
@@ -158,13 +158,9 @@ ImageView imageView7;
             return insets;
         });
 
-        for (int i=0;i<giocatori.length;i++)
-        {
-            if (giocatori[i].bot)
-            {
-                numeroBot++;
-            }
-        }
+        String response = leggiGiocatori();
+        System.out.println(response);
+
 
         // Trova il pulsante del giocatore e imposta un listener di click
         Button playerButton = findViewById(R.id.buttonplayer_1);
@@ -172,16 +168,6 @@ ImageView imageView7;
         Button playerButton2 = findViewById(R.id.buttonplayer_3);
         Button playerButton3 = findViewById(R.id.buttonplayer_4);
         giocaButton = findViewById(R.id.buttongioca);
-        if (player.bot) {
-            // Nascondi il pulsante "gira" durante il turno del bot
-            giocaButton.setVisibility(View.INVISIBLE);
-
-            // Esegui il turno del bot immediatamente
-            playBotTurn(player);
-
-            // Mostra nuovamente il pulsante "gira" dopo un ritardo di 5 secondi
-            handler.postDelayed(botTurnRunnable, 5000);
-        }
         playerButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -242,6 +228,8 @@ ImageView imageView7;
             }
 
         });
+
+
         playerButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -338,16 +326,7 @@ ImageView imageView7;
                                                        break;
                                                }
 
-                                               if (currentPlayer.bot) {
-                                                   // Nascondi il pulsante "gira" durante il turno del bot
-                                                   giocaButton.setVisibility(View.INVISIBLE);
 
-                                                   // Esegui il turno del bot immediatamente
-                                                   playBotTurn(currentPlayer);
-
-                                                   // Mostra nuovamente il pulsante "gira" dopo un ritardo di 5 secondi
-                                                   handler.postDelayed(botTurnRunnable, 5000);
-                                               } else {
                                                    Random rand = new Random();
 
                                                    // Roll two dice
@@ -443,7 +422,7 @@ ImageView imageView7;
                                                    dialog.show();
                                                    nextTurn();
                                                }
-                                           }
+
 
 
 
@@ -616,98 +595,52 @@ pedine();
             }
         }
     }
-    public void playBotTurn(Player botPlayer) {
-        Random rand = new Random();
 
-        // Roll two dice
-        int steps = rand.nextInt(6) + 1 + rand.nextInt(6) + 1;
-        System.out.println("Player rolled: " + steps);
-
-        // Mostra a schermo quanto è uscito dal dado
-        Toast.makeText(game_form_multiplayer.this, "Bot rolled: " + steps, Toast.LENGTH_SHORT).show();
-
-        caselle[botPlayer.posizione].removePlayer(botPlayer);
-        caselle[botPlayer.move(steps, caselle)].addPlayer(botPlayer);
-        System.out.println("Player is now on: " + caselle[botPlayer.posizione].nome);
-        System.out.println("Player is on a " + caselle[botPlayer.posizione].giocatori.size());
-        pedine();
-
-        if (caselle[botPlayer.posizione].proprietario == botPlayer) {
-            // Decide randomly whether to buy a house or not
-            boolean buyHouse = rand.nextBoolean();
-            if (buyHouse && botPlayer.getMoney() > caselle[botPlayer.posizione].prezzo * 0.75) {
-                botPlayer.pay((int) (caselle[botPlayer.posizione].prezzo * 0.75));
-                caselle[botPlayer.posizione].caseNum++;
-                if (caselle[botPlayer.posizione].caseNum == 4) {
-                    caselle[botPlayer.posizione].hotel = true;
-                }
-                Toast.makeText(game_form_multiplayer.this, "Bot bought a house on: " + caselle[botPlayer.posizione].nome, Toast.LENGTH_SHORT).show();
-            }
-        }
-        // Controlla se la casella ha un proprietario
-        if (caselle[botPlayer.posizione].proprietario == null) {
-            // Il bot decide automaticamente se comprare la casella
-            if (botPlayer.getMoney() > caselle[botPlayer.posizione].prezzo) {
-                botPlayer.pay(caselle[botPlayer.posizione].prezzo);
-                caselle[botPlayer.posizione].setProprietario(botPlayer);
-                botPlayer.addProprietà(caselle[botPlayer.posizione]);
-                aggiorna();
-
-                // Mostra un messaggio a schermo
-                Toast.makeText(game_form_multiplayer.this, "Bot bought property: " + caselle[botPlayer.posizione].nome, Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            // Il bot paga l'affitto
-            botPlayer.pay(caselle[botPlayer.posizione].getRent());
-
-            // Mostra un messaggio a schermo
-            Toast.makeText(game_form_multiplayer.this, "Bot paid rent: " + caselle[botPlayer.posizione].getRent(), Toast.LENGTH_SHORT).show();
-        }
-
-        // Show the "roll" button again after a delay of 5 seconds
-
-    }
 
     public void nextTurn() {
         // Increment the turn
         turno++;
-        if (turno > giocatori.length) { // Change 4 to the actual number of players
-            turno = 1;
-        }
+        giocatori.add(player);
+        //if (turno > giocatori.length) { // Change 4 to the actual number of players
+
+         //   turno = 1;
+        //}
 
         // Get the next player
-        Player nextPlayer = giocatori[turno - 1]; // Use array indexing to get the next player
+        //Player nextPlayer = giocatori[turno - 1]; // Use array indexing to get the next player
 
         // If the next player is a bot, start their turn automatically
-        if (nextPlayer.bot) {
-            // Increment the bot turn counter
-            botTurnCount++;
 
-            // If all bots have had their turn, break the cycle
-            if (botTurnCount > numeroBot) {
-                botTurnCount = 0; // Reset the bot turn counter
-                return;
-            }
-
-            // Hide the "roll" button during the bot's turn
-            giocaButton.setVisibility(View.INVISIBLE);
-
-            // Execute the bot's turn immediately
-            playBotTurn(nextPlayer);
-
-            // Show the "roll" button again after a delay of 5 seconds
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    // Show the "roll" button again
-                    giocaButton.setVisibility(View.VISIBLE);
-
-                    // Call nextTurn() here to ensure it's only called once per bot turn
-                    nextTurn();
-                }
-            }, 5000);
-        }
     }
+    public String leggiGiocatori()
+    {
+        String response = "";
+        try {
+            URL url = new URL("https://5ailucastangherlin.barsanti.edu.it/api_monopoly/Giocatori_mobili");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setReadTimeout(15000);
+            conn.setConnectTimeout(15000);
+            conn.connect();
+
+            int responseCode = conn.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                String line;
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                while ((line = br.readLine()) != null) {
+                    response += line;
+                }
+            } else {
+                response = "";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return response;
+
+
+    }
+
 
 }
 

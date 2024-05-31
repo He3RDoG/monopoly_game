@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.ArrayList;
 
 public class Player extends unityBase {
-    int id;
+    public int id;
     String username;
     ArrayList<Banconote> soldi;
     public int posizione;
@@ -17,6 +17,16 @@ public class Player extends unityBase {
 public Player(int id, String username) {
         this.id = id;
         this.username = username;
+        this.soldi = new ArrayList<>();
+        initSoldi();
+        this.posizione = 0;
+        this.prigione = false;
+        this.proprietà = new ArrayList<>();
+        bot = true;
+    }
+
+    public Player()
+    {
         this.soldi = new ArrayList<>();
         initSoldi();
         this.posizione = 0;
@@ -107,6 +117,13 @@ public Player(int id, String username) {
             this.soldi.addAll(changeBills);
             System.out.println("Your change is: " + change);
         }
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
     public int move(int steps, casella[] caselle) {
         int oldPosition = this.posizione;
